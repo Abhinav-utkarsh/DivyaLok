@@ -691,6 +691,8 @@ footer {
     .nav-menu.active .nav-links {
         display: flex;
         flex-direction: column;
+        width: 100%; /* Ensure the list container takes full width */
+        align-items: center; /* Center the list items horizontally */
         padding-bottom: 2rem;
     }
     .nav-menu {
@@ -1078,4 +1080,5 @@ footer {
     line-height: 1.8;
     font-size: 1.05rem;
     text-align: justify;
+
 }
