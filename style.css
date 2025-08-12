@@ -749,6 +749,13 @@ footer {
         border-left: 4px solid var(--primary-color);
     }
     .timeline-icon, .timeline-item:nth-child(odd) .timeline-icon, .timeline-item:nth-child(even) .timeline-icon { left: 15px; }
+
+    /* --- PARALLAX MOBILE FIX --- */
+    .parallax-section {
+        background-attachment: scroll; /* Disable parallax on mobile to prevent layout issues */
+        height: auto; /* Allow height to be determined by content */
+        padding: 4.5rem 2rem; /* Add padding for spacing, consistent with other sections */
+    }
 }
 
 @media (max-width: 480px) {
@@ -1080,5 +1087,4 @@ footer {
     line-height: 1.8;
     font-size: 1.05rem;
     text-align: justify;
-
 }
