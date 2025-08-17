@@ -16,9 +16,6 @@
     <!-- Your Existing Stylesheet -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- PDF.js Library (stable version) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.102/pdf.min.js"></script>
-
     <!-- Page-specific styles -->
     <style>
         /* This ensures the content starts below your fixed header */
@@ -53,22 +50,23 @@
             display: block;
         }
 
-        /* --- NEW PDF Viewer Styles --- */
+        /* --- PDF Viewer Styles (Iframe Method) --- */
         .pdf-viewer-container {
             display: none; /* Hidden by default */
             margin-top: 3rem;
             border: 3px solid var(--secondary-color);
             border-radius: 10px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            background-color: #f0eade;
+            background-color: var(--dark-color);
             position: relative; /* For the loader */
+            overflow: hidden; /* To contain the rounded corners */
         }
 
         .pdf-viewer-container.visible {
             display: block;
         }
 
-        .pdf-viewer-controls {
+        .pdf-viewer-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -76,62 +74,32 @@
             background-color: var(--dark-color);
             color: var(--light-color);
             border-bottom: 3px solid var(--secondary-color);
-            border-radius: 6px 6px 0 0;
         }
 
         #pdf-doc-title {
             font-weight: 600;
             font-family: var(--font-sanskrit);
-        }
-
-        .pdf-nav {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .pdf-ctrl-btn {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 0.4rem 0.8rem;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background-color 0.3s;
-        }
-
-        .pdf-ctrl-btn:hover {
-            background-color: var(--secondary-color);
-            color: var(--dark-color);
-        }
-
-        .pdf-ctrl-btn:disabled {
-            background-color: #888;
-            cursor: not-allowed;
+            font-size: 1.2rem;
         }
 
         #pdf-close-btn {
             background: transparent;
+            border: none;
             font-size: 1.5rem;
             padding: 0 0.5rem;
             color: #fff;
+            cursor: pointer;
+            transition: color 0.3s;
         }
         #pdf-close-btn:hover {
             color: var(--secondary-color);
         }
 
-        #canvas-container {
+        #pdf-iframe {
+            display: block; /* Removes bottom space */
             width: 100%;
-            max-height: 85vh;
-            overflow-y: auto; /* Allow scrolling for tall pages */
-            padding: 1rem;
-        }
-
-        #pdf-canvas {
-            display: block;
-            margin: 0 auto;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            height: 85vh; /* Use viewport height for better responsiveness */
+            border: none;
         }
 
         .pdf-loader {
@@ -139,7 +107,7 @@
             top: 0; left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 248, 225, 0.8);
+            background: rgba(240, 234, 222, 0.9);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -234,19 +202,15 @@
 
                 <!-- PDF Viewer Container -->
                 <div id="pdf-viewer-container" class="pdf-viewer-container">
-                    <div class="pdf-viewer-controls">
-                        <button id="pdf-close-btn" class="pdf-ctrl-btn" title="Close Viewer">✖</button>
+                    <div id="pdf-loader" class="pdf-loader">
+                        <div class="mandala-loader-small"></div>
+                        <span>Loading Chapter...</span>
+                    </div>
+                    <div class="pdf-viewer-header">
                         <span id="pdf-doc-title"></span>
-                        <div class="pdf-nav">
-                            <button id="pdf-prev-btn" class="pdf-ctrl-btn">‹ Prev</button>
-                            <span id="pdf-page-info">Page <span id="pdf-page-num"></span> of <span id="pdf-page-count"></span></span>
-                            <button id="pdf-next-btn" class="pdf-ctrl-btn">Next ›</button>
-                        </div>
+                        <button id="pdf-close-btn" title="Close Viewer">✖</button>
                     </div>
-                    <div id="canvas-container">
-                        <canvas id="pdf-canvas"></canvas>
-                    </div>
-                    <div id="pdf-loader" class="pdf-loader"><div class="mandala-loader-small"></div><span>Loading Chapter...</span></div>
+                    <iframe id="pdf-iframe" title="Gita Chapter PDF Viewer"></iframe>
                 </div>
 
             </div>
@@ -285,6 +249,6 @@
 
     <!-- Your Existing Scripts -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>
