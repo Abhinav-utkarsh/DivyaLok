@@ -7,62 +7,49 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f4f4f4;
+      text-align: center;
       margin: 0;
       padding: 0;
+      background: #f5f5f5;
     }
 
-    header {
-      background: #333;
-      color: white;
-      padding: 1rem;
-      text-align: center;
+    h1 {
+      margin: 20px;
+      font-size: 28px;
+      color: #333;
     }
 
-    main {
-      padding: 1rem;
-    }
-
-    .chapter-list {
+    .chapters {
       display: flex;
       flex-wrap: wrap;
-      gap: 1rem;
       justify-content: center;
+      gap: 15px;
+      margin: 20px;
     }
 
-    .chapter-item {
-      background: white;
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      text-align: center;
-      width: 150px;
-      transition: transform 0.2s;
-    }
-
-    .chapter-item:hover {
-      transform: scale(1.05);
-    }
-
-    .chapter-item button {
-      background: #007bff;
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
+    .chapters button {
+      padding: 12px 20px;
+      font-size: 16px;
       cursor: pointer;
+      border: none;
+      background: #4CAF50;
+      color: white;
+      border-radius: 6px;
+      transition: background 0.3s;
     }
 
-    .chapter-item button:hover {
-      background: #0056b3;
+    .chapters button:hover {
+      background: #45a049;
     }
 
-    /* PDF Viewer Styling */
     #pdf-viewer-container {
-      margin-top: 2rem;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 900px;
+      height: 600px;
+      border: 2px solid #ccc;
       display: none;
       flex-direction: column;
-      align-items: center;
     }
 
     #pdf-viewer-container.visible {
@@ -70,84 +57,84 @@
     }
 
     #pdf-viewer-iframe {
-      width: 90%;
-      height: 600px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      margin-top: 1rem;
+      flex: 1;
+      width: 100%;
+      border: none;
     }
 
-    #close-btn {
-      margin-top: 1rem;
+    .close-btn {
       background: red;
       color: white;
       border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
+      padding: 8px 12px;
       cursor: pointer;
-    }
-
-    #close-btn:hover {
-      background: darkred;
+      align-self: flex-end;
+      font-size: 14px;
+      border-radius: 4px;
+      margin: 5px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Bhagavad Gita Chapters</h1>
-  </header>
 
-  <main>
-    <div class="chapter-list">
-      <div class="chapter-item">
-        <h3>Chapter 1</h3>
-        <button class="gita-pdf-link" data-pdf="gitachapters/Chapter1.pdf">Open</button>
-      </div>
-      <div class="chapter-item">
-        <h3>Chapter 2</h3>
-        <button class="gita-pdf-link" data-pdf="gitachapters/Chapter2.pdf">Open</button>
-      </div>
-      <div class="chapter-item">
-        <h3>Chapter 3</h3>
-        <button class="gita-pdf-link" data-pdf="gitachapters/Chapter3.pdf">Open</button>
-      </div>
-      <!-- Add more chapters the same way -->
-    </div>
+  <h1>📖 Bhagavad Gita Chapters</h1>
 
-    <!-- PDF Viewer -->
-    <div id="pdf-viewer-container">
-      <iframe id="pdf-viewer-iframe"></iframe>
-      <button id="close-btn">Close PDF</button>
-    </div>
-  </main>
+  <div class="chapters">
+    <a href="gitachapters/Chapter1.pdf" class="gita-pdf-link"><button>Chapter 1</button></a>
+    <a href="gitachapters/Chapter2.pdf" class="gita-pdf-link"><button>Chapter 2</button></a>
+    <a href="gitachapters/Chapter3.pdf" class="gita-pdf-link"><button>Chapter 3</button></a>
+    <a href="gitachapters/Chapter4.pdf" class="gita-pdf-link"><button>Chapter 4</button></a>
+    <a href="gitachapters/Chapter5.pdf" class="gita-pdf-link"><button>Chapter 5</button></a>
+    <a href="gitachapters/Chapter6.pdf" class="gita-pdf-link"><button>Chapter 6</button></a>
+    <a href="gitachapters/Chapter7.pdf" class="gita-pdf-link"><button>Chapter 7</button></a>
+    <a href="gitachapters/Chapter8.pdf" class="gita-pdf-link"><button>Chapter 8</button></a>
+    <a href="gitachapters/Chapter9.pdf" class="gita-pdf-link"><button>Chapter 9</button></a>
+    <a href="gitachapters/Chapter10.pdf" class="gita-pdf-link"><button>Chapter 10</button></a>
+    <a href="gitachapters/Chapter11.pdf" class="gita-pdf-link"><button>Chapter 11</button></a>
+    <a href="gitachapters/Chapter12.pdf" class="gita-pdf-link"><button>Chapter 12</button></a>
+    <a href="gitachapters/Chapter13.pdf" class="gita-pdf-link"><button>Chapter 13</button></a>
+    <a href="gitachapters/Chapter14.pdf" class="gita-pdf-link"><button>Chapter 14</button></a>
+    <a href="gitachapters/Chapter15.pdf" class="gita-pdf-link"><button>Chapter 15</button></a>
+    <a href="gitachapters/Chapter16.pdf" class="gita-pdf-link"><button>Chapter 16</button></a>
+    <a href="gitachapters/Chapter17.pdf" class="gita-pdf-link"><button>Chapter 17</button></a>
+    <a href="gitachapters/Chapter18.pdf" class="gita-pdf-link"><button>Chapter 18</button></a>
+  </div>
+
+  <div id="pdf-viewer-container">
+    <button class="close-btn" onclick="closeViewer()">Close ✖</button>
+    <iframe id="pdf-viewer-iframe"></iframe>
+  </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      const buttons = document.querySelectorAll(".gita-pdf-link");
+      const links = document.querySelectorAll(".gita-pdf-link");
       const viewerContainer = document.getElementById("pdf-viewer-container");
       const viewerIframe = document.getElementById("pdf-viewer-iframe");
-      const closeBtn = document.getElementById("close-btn");
 
-      buttons.forEach(btn => {
-        btn.addEventListener("click", function () {
-          const pdfPath = this.getAttribute("data-pdf");
+      links.forEach(link => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          const pdfUrl = this.getAttribute("href");
 
-          // Build full PDF URL (works on GitHub Pages & custom domain)
-          const fullUrl = window.location.origin + "/" + pdfPath;
+          // Build absolute path for GitHub Pages / custom domain
+          const fullUrl = window.location.origin + "/" + pdfUrl;
 
-          // Use Google Docs Viewer
-          viewerIframe.src = "https://docs.google.com/gview?url=" + encodeURIComponent(fullUrl) + "&embedded=true";
+          // Use Google Docs Viewer for inline display
+          viewerIframe.src = "https://docs.google.com/gview?url=" +
+                             encodeURIComponent(fullUrl) +
+                             "&embedded=true";
 
           viewerContainer.classList.add("visible");
           viewerContainer.scrollIntoView({ behavior: "smooth" });
         });
       });
-
-      closeBtn.addEventListener("click", function () {
-        viewerContainer.classList.remove("visible");
-        viewerIframe.src = ""; // Clear PDF
-      });
     });
+
+    function closeViewer() {
+      document.getElementById("pdf-viewer-container").classList.remove("visible");
+      document.getElementById("pdf-viewer-iframe").src = "";
+    }
   </script>
+
 </body>
 </html>
