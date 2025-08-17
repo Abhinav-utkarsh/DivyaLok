@@ -1,140 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bhagavad Gita Chapters</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-      background: #f5f5f5;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhagavad Gita Chapters - DivyaLok</title>
 
-    h1 {
-      margin: 20px;
-      font-size: 28px;
-      color: #333;
-    }
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Tiro+Devanagari+Sanskrit:wght@400;700&display=swap" rel="stylesheet">
 
-    .chapters {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      margin: 20px;
-    }
+    <!-- AOS Library for animations -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
-    .chapters button {
-      padding: 12px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      border: none;
-      background: #4CAF50;
-      color: white;
-      border-radius: 6px;
-      transition: background 0.3s;
-    }
+    <!-- Your Existing Stylesheet -->
+    <link rel="stylesheet" href="style.css">
 
-    .chapters button:hover {
-      background: #45a049;
-    }
+    <!-- Page-specific styles -->
+    <style>
+        /* This ensures the content starts below your fixed header */
+        #gita-chapters-section {
+            padding-top: 8rem;
+            padding-bottom: 4.5rem;
+        }
 
-    #pdf-viewer-container {
-      margin: 20px auto;
-      width: 90%;
-      max-width: 900px;
-      height: 600px;
-      border: 2px solid #ccc;
-      display: none;
-      flex-direction: column;
-    }
+        .gita-chapters-grid {
+            display: grid;
+            /* Creates a responsive grid of buttons */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
 
-    #pdf-viewer-container.visible {
-      display: flex;
-    }
+        .gita-chapter-btn {
+            /* Overrides for the .btn class to allow multi-line text */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 1.5rem 1rem;
+            height: 80px; /* Adjusted height for single line text */
+            line-height: 1.3;
+        }
 
-    #pdf-viewer-iframe {
-      flex: 1;
-      width: 100%;
-      border: none;
-    }
+        .gita-chapter-btn strong {
+            font-size: 1.3rem; /* Slightly larger font for chapter number */
+            margin-bottom: 0;
+            display: block;
+        }
 
-    .close-btn {
-      background: red;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      cursor: pointer;
-      align-self: flex-end;
-      font-size: 14px;
-      border-radius: 4px;
-      margin: 5px;
-    }
-  </style>
+        /* PDF Viewer Styles */
+        .pdf-viewer-container {
+            display: none; /* Hidden by default */
+            margin-top: 3rem;
+            width: 100%;
+            /* Maintain a common document aspect ratio */
+            aspect-ratio: 8.5 / 11; 
+            max-height: 85vh; /* Don't let it be too tall on any screen */
+            border: 3px solid var(--secondary-color);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            overflow: hidden; /* Ensures iframe corners are rounded */
+            background-color: #eee; /* Placeholder color */
+        }
+
+        .pdf-viewer-container.visible {
+            display: block;
+        }
+
+        #pdf-viewer-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
 </head>
 <body>
 
-  <h1>📖 Bhagavad Gita Chapters</h1>
+    <!-- Header (replicated from your project's structure) -->
+    <header id="header">
+        <nav class="container">
+            <a href="index.html" class="logo-container">
+                <span class="logo-main">
+                    <span class="logo-icon">🕉️</span><span class="logo-text">DivyaLok</span>
+                </span>
+                <span class="logo-sub">Eternal soul - Rooted in Sanatan Dharma</span>
+                <span class="logo-author" data-lang-key="footerAuthor">By: Abhinav Utkarsh Mishra</span>
+            </a>
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="index.html#about" data-lang-key="navAbout">About</a></li>
+                    <li><a href="index.html#deities" data-lang-key="navDeities">Deities</a></li>
+                    <li><a href="index.html#scriptures" data-lang-key="navScriptures">Scriptures</a></li>
+                    <li><a href="gita-chapters.html" data-lang-key="navGita">Gita Chapters</a></li>
+                    <li><a href="index.html#festivals" data-lang-key="navFestivals">Festivals</a></li>
+                    <li><a href="index.html#temples" data-lang-key="navTemples">Temples</a></li>
+                    <li><a href="index.html#blog" data-lang-key="navBlog">Blog</a></li>
+                </ul>
+                <button id="lang-toggle" class="lang-btn">हिन्दी</button>
+            </div>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </nav>
+    </header>
 
-  <div class="chapters">
-    <a href="gitachapters/Chapter1.pdf" class="gita-pdf-link"><button>Chapter 1</button></a>
-    <a href="gitachapters/Chapter2.pdf" class="gita-pdf-link"><button>Chapter 2</button></a>
-    <a href="gitachapters/Chapter3.pdf" class="gita-pdf-link"><button>Chapter 3</button></a>
-    <a href="gitachapters/Chapter4.pdf" class="gita-pdf-link"><button>Chapter 4</button></a>
-    <a href="gitachapters/Chapter5.pdf" class="gita-pdf-link"><button>Chapter 5</button></a>
-    <a href="gitachapters/Chapter6.pdf" class="gita-pdf-link"><button>Chapter 6</button></a>
-    <a href="gitachapters/Chapter7.pdf" class="gita-pdf-link"><button>Chapter 7</button></a>
-    <a href="gitachapters/Chapter8.pdf" class="gita-pdf-link"><button>Chapter 8</button></a>
-    <a href="gitachapters/Chapter9.pdf" class="gita-pdf-link"><button>Chapter 9</button></a>
-    <a href="gitachapters/Chapter10.pdf" class="gita-pdf-link"><button>Chapter 10</button></a>
-    <a href="gitachapters/Chapter11.pdf" class="gita-pdf-link"><button>Chapter 11</button></a>
-    <a href="gitachapters/Chapter12.pdf" class="gita-pdf-link"><button>Chapter 12</button></a>
-    <a href="gitachapters/Chapter13.pdf" class="gita-pdf-link"><button>Chapter 13</button></a>
-    <a href="gitachapters/Chapter14.pdf" class="gita-pdf-link"><button>Chapter 14</button></a>
-    <a href="gitachapters/Chapter15.pdf" class="gita-pdf-link"><button>Chapter 15</button></a>
-    <a href="gitachapters/Chapter16.pdf" class="gita-pdf-link"><button>Chapter 16</button></a>
-    <a href="gitachapters/Chapter17.pdf" class="gita-pdf-link"><button>Chapter 17</button></a>
-    <a href="gitachapters/Chapter18.pdf" class="gita-pdf-link"><button>Chapter 18</button></a>
-  </div>
+    <main>
+        <section id="gita-chapters-section">
+            <div class="container">
+                <h2 class="section-title" data-lang-key="gitaChaptersTitle">Bhagavad Gita Chapters</h2>
+                <div class="gita-chapters-grid">
+                    <!-- Make sure your PDFs are in 'pdfs/gita/' -->
+                    <a href="pdfs/gita/chapter-1.pdf" class="btn gita-chapter-btn gita-pdf-link" data-aos="fade-up" data-aos-delay="100"><strong data-lang-key="gitaCh1Title">Chapter 1</strong></a>
+                    <a href="pdfs/gita/chapter-2.pdf" class="btn gita-chapter-btn gita-pdf-link" data-aos="fade-up" data-aos-delay="150"><strong data-lang-key="gitaCh2Title">Chapter 2</strong></a>
+                    <a href="pdfs/gita/chapter-3.pdf" class="btn gita-chapter-btn gita-pdf-link" data-aos="fade-up" data-aos-delay="200"><strong data-lang-key="gitaCh3Title">Chapter 3</strong></a>
+                    <a href="pdfs/gita/chapter-4.pdf" class="btn gita-chapter-btn gita-pdf-link" data-aos="fade-up" data-aos-delay="250"><strong data-lang-key="gitaCh4Title">Chapter 4</strong></a>
+                    <a href="pdfs/gita/chapter-5.pdf" class="btn gita-chapter-btn gita-pdf-link" data-aos="fade-up" data-aos-delay="300"><strong data-lang-key="gitaCh5Title">Chapter 5</strong></a>
+                    <a href="pdfs/gita/chapter-6.pdf" class="btn gita-chapter-btn gita-pdf-link" data-aos="fade-up" data-aos-delay="350"><strong data-lang-key="gitaCh6Title">Chapter 6</strong></a>
+                    <a href="pdfs/gita/chapter-7.pdf" class="btn gita-chapter-btn gita-pdf-link" data-aos="fade-up" data-aos-delay="100"><strong data-lang-key="gitaCh7Title">Chapter 7</strong></a>
+                    <a href="pdfs/gita/chapter-8.pdf" class="btn gita-chapter-btn gita-pdf-link" data-aos="fade-up" data-aos-delay="150"><strong data-lang-key="gitaCh8Title">Chapter 8</strong></a>
+                    <a href="pdfs/gita/chapter-9.pdf" class="btn gita-chapter-btn gita-pdf-link" data-aos="fade-up" data-aos-delay="200"><strong data-lang-key="gitaCh9Title">Chapter 9</strong></a>
+                    <a href="pdfs/gita/chapter-10.pdf" class="btn gita-chapter-btn gita-pdf-link" data-aos="fade-up" data-aos-delay="250"><strong data-lang-key="gitaCh10Title">Chapter 10</strong></a>
+                    <a href="pdfs/gita/chapter-11.pdf" class="btn gita-chapter-btn gita-pdf-link" data-aos="fade-up" data-aos-delay="300"><strong data-lang-key="gitaCh11Title">Chapter 11</strong></a>
+                    <a href="pdfs/gita/chapter-12.pdf" class="btn gita-chapter-btn gita-pdf-link" data-aos="fade-up" data-aos-delay="350"><strong data-lang-key="gitaCh12Title">Chapter 12</strong></a>
+                    <a href="pdfs/gita/chapter-13.pdf" class="btn gita-chapter-btn gita-pdf-link" data-aos="fade-up" data-aos-delay="100"><strong data-lang-key="gitaCh13Title">Chapter 13</strong></a>
+                    <a href="pdfs/gita/chapter-14.pdf" class="btn gita-chapter-btn gita-pdf-link" data-aos="fade-up" data-aos-delay="150"><strong data-lang-key="gitaCh14Title">Chapter 14</strong></a>
+                    <a href="pdfs/gita/chapter-15.pdf" class="btn gita-chapter-btn gita-pdf-link" data-aos="fade-up" data-aos-delay="200"><strong data-lang-key="gitaCh15Title">Chapter 15</strong></a>
+                    <a href="pdfs/gita/chapter-16.pdf" class="btn gita-chapter-btn gita-pdf-link" data-aos="fade-up" data-aos-delay="250"><strong data-lang-key="gitaCh16Title">Chapter 16</strong></a>
+                    <a href="pdfs/gita/chapter-17.pdf" class="btn gita-chapter-btn gita-pdf-link" data-aos="fade-up" data-aos-delay="300"><strong data-lang-key="gitaCh17Title">Chapter 17</strong></a>
+                    <a href="pdfs/gita/chapter-18.pdf" class="btn gita-chapter-btn gita-pdf-link" data-aos="fade-up" data-aos-delay="350"><strong data-lang-key="gitaCh18Title">Chapter 18</strong></a>
+                </div>
 
-  <div id="pdf-viewer-container">
-    <button class="close-btn" onclick="closeViewer()">Close ✖</button>
-    <iframe id="pdf-viewer-iframe"></iframe>
-  </div>
+                <!-- PDF Viewer Container -->
+                <div id="pdf-viewer-container" class="pdf-viewer-container">
+                    <iframe id="pdf-viewer-iframe" title="Bhagavad Gita Chapter PDF Viewer"></iframe>
+                </div>
+            </div>
+        </section>
+    </main>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const links = document.querySelectorAll(".gita-pdf-link");
-      const viewerContainer = document.getElementById("pdf-viewer-container");
-      const viewerIframe = document.getElementById("pdf-viewer-iframe");
+    <!-- Footer (replicated from your project's structure) -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 data-lang-key="footerContact">Contact Us</h4>
+                    <p><a href="mailto:abhinavutkarsh3@gmail.com" class="footer-link">abhinavutkarsh3@gmail.com</a></p>
+                </div>
+                <div class="footer-section">
+                    <h4 data-lang-key="footerFollow">Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="#" target="_blank" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.25 6.5 1.75 1.75 0 016.5 8.25zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.62 1.62 0 0013 14.19V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.1 1.16 3.1 3.99z"></path></svg></a>
+                        <a href="#" target="_blank" aria-label="GitHub"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"></path></svg></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4 data-lang-key="footerDisclaimer">Disclaimer</h4>
+                    <p data-lang-key="footerDisclaimerText">This website is for educational and spiritual purposes only.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>
+                    <span data-lang-key="footerDevotion">Made with devotion 💛</span>
+                    <span class="author-credit" data-lang-key="footerAuthor">By: Abhinav Utkarsh Mishra</span>
+                </p>
+                <p data-lang-key="footerRights">&copy; 2025 Av_eSAFE . All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
 
-      links.forEach(link => {
-        link.addEventListener("click", function (e) {
-          e.preventDefault();
-          const pdfUrl = this.getAttribute("href");
-
-          // Build absolute path for GitHub Pages / custom domain
-          const fullUrl = window.location.origin + "/" + pdfUrl;
-
-          // Use Google Docs Viewer for inline display
-          viewerIframe.src = "https://docs.google.com/gview?url=" +
-                             encodeURIComponent(fullUrl) +
-                             "&embedded=true";
-
-          viewerContainer.classList.add("visible");
-          viewerContainer.scrollIntoView({ behavior: "smooth" });
-        });
-      });
-    });
-
-    function closeViewer() {
-      document.getElementById("pdf-viewer-container").classList.remove("visible");
-      document.getElementById("pdf-viewer-iframe").src = "";
-    }
-  </script>
-
+    <!-- Your Existing Scripts -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
