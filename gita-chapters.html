@@ -16,6 +16,10 @@
     <!-- Your Existing Stylesheet -->
     <link rel="stylesheet" href="style.css">
 
+    <!-- PDF.js Library (stable version) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.102/pdf.min.js"></script>
+    <script>pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.102/pdf.worker.min.js`;</script>
+
     <!-- Page-specific styles -->
     <style>
         /* This ensures the content starts below your fixed header */
@@ -50,29 +54,128 @@
             display: block;
         }
 
-        /* PDF Viewer Styles */
+        /* --- NEW PDF Viewer Styles --- */
         .pdf-viewer-container {
             display: none; /* Hidden by default */
             margin-top: 3rem;
-            width: 100%;
-            /* Maintain a common document aspect ratio */
-            aspect-ratio: 8.5 / 11; 
-            max-height: 85vh; /* Don't let it be too tall on any screen */
             border: 3px solid var(--secondary-color);
             border-radius: 10px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            overflow: hidden; /* Ensures iframe corners are rounded */
-            background-color: #eee; /* Placeholder color */
+            background-color: #f0eade;
+            position: relative; /* For the loader */
         }
 
         .pdf-viewer-container.visible {
             display: block;
         }
 
-        #pdf-viewer-iframe {
+        .pdf-viewer-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            border-bottom: 3px solid var(--secondary-color);
+            border-radius: 6px 6px 0 0;
+        }
+
+        #pdf-doc-title {
+            font-weight: 600;
+            font-family: var(--font-sanskrit);
+        }
+
+        .pdf-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .pdf-ctrl-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 0.4rem 0.8rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .pdf-ctrl-btn:hover {
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+        }
+
+        .pdf-ctrl-btn:disabled {
+            background-color: #888;
+            cursor: not-allowed;
+        }
+
+        #pdf-close-btn {
+            background: transparent;
+            font-size: 1.5rem;
+            padding: 0 0.5rem;
+            color: #fff;
+        }
+        #pdf-close-btn:hover {
+            color: var(--secondary-color);
+        }
+
+        #canvas-container {
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto; /* Allow scrolling for tall pages */
+            padding: 1rem;
+        }
+
+        #pdf-canvas {
+            display: block;
+            margin: 0 auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .pdf-loader {
+            position: absolute;
+            top: 0; left: 0;
             width: 100%;
             height: 100%;
-            border: none;
+            background: rgba(255, 248, 225, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            display: none; /* Hidden by default */
+        }
+
+        .pdf-loader.visible {
+            display: flex;
+        }
+
+        .pdf-loader span {
+            margin-top: 1rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        /* Re-using mandala loader but smaller */
+        .mandala-loader-small {
+            position: relative;
+            width: 80px; height: 80px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            animation: rotate-mandala 10s linear infinite;
+        }
+        .mandala-loader-small::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 40px; height: 40px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse-glow-loader 3s ease-in-out infinite;
         }
     </style>
 </head>
@@ -132,8 +235,21 @@
 
                 <!-- PDF Viewer Container -->
                 <div id="pdf-viewer-container" class="pdf-viewer-container">
-                    <iframe id="pdf-viewer-iframe" title="Bhagavad Gita Chapter PDF Viewer"></iframe>
+                    <div class="pdf-viewer-controls">
+                        <button id="pdf-close-btn" class="pdf-ctrl-btn" title="Close Viewer">✖</button>
+                        <span id="pdf-doc-title"></span>
+                        <div class="pdf-nav">
+                            <button id="pdf-prev-btn" class="pdf-ctrl-btn">‹ Prev</button>
+                            <span id="pdf-page-info">Page <span id="pdf-page-num"></span> of <span id="pdf-page-count"></span></span>
+                            <button id="pdf-next-btn" class="pdf-ctrl-btn">Next ›</button>
+                        </div>
+                    </div>
+                    <div id="canvas-container">
+                        <canvas id="pdf-canvas"></canvas>
+                    </div>
+                    <div id="pdf-loader" class="pdf-loader"><div class="mandala-loader-small"></div><span>Loading Chapter...</span></div>
                 </div>
+
             </div>
         </section>
     </main>
