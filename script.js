@@ -1192,31 +1192,110 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- GITA CHAPTERS PAGE LOGIC ---
     const initGitaChaptersPage = () => {
+        // Check if we are on the Gita Chapters page
         const chapterLinks = document.querySelectorAll('.gita-pdf-link');
+        if (!chapterLinks.length) return;
+
         const pdfViewerContainer = document.getElementById('pdf-viewer-container');
-        const pdfIframe = document.getElementById('pdf-viewer-iframe');
-    
-        // Only run the rest of the code if we are on the Gita Chapters page
-        if (!chapterLinks.length || !pdfViewerContainer || !pdfIframe) {
-            return;
-        }
-    
+        const canvas = document.getElementById('pdf-canvas');
+        const ctx = canvas.getContext('2d');
+        const loader = document.getElementById('pdf-loader');
+
+        const docTitleEl = document.getElementById('pdf-doc-title');
+        const pageNumEl = document.getElementById('pdf-page-num');
+        const pageCountEl = document.getElementById('pdf-page-count');
+        const prevBtn = document.getElementById('pdf-prev-btn');
+        const nextBtn = document.getElementById('pdf-next-btn');
+        const closeBtn = document.getElementById('pdf-close-btn');
+
+        let pdfDoc = null;
+        let pageNum = 1;
+        let pageRendering = false;
+        let pageNumPending = null;
+        const scale = 1.8; // Increase scale for better quality
+
+        const renderPage = num => {
+            pageRendering = true;
+            // Using promise to fetch page
+            pdfDoc.getPage(num).then(page => {
+                const viewport = page.getViewport({ scale: scale });
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                // Render PDF page into canvas context
+                const renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport
+                };
+                const renderTask = page.render(renderContext);
+
+                // Wait for rendering to finish
+                renderTask.promise.then(() => {
+                    pageRendering = false;
+                    if (pageNumPending !== null) {
+                        // New page rendering is pending
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
+                });
+            });
+
+            // Update page counters
+            pageNumEl.textContent = num;
+            prevBtn.disabled = (num <= 1);
+            nextBtn.disabled = (num >= pdfDoc.numPages);
+        };
+
+        const queueRenderPage = num => {
+            if (pageRendering) {
+                pageNumPending = num;
+            } else {
+                renderPage(num);
+            }
+        };
+
+        const onPrevPage = () => {
+            if (pageNum <= 1) return;
+            pageNum--;
+            queueRenderPage(pageNum);
+        };
+
+        const onNextPage = () => {
+            if (pageNum >= pdfDoc.numPages) return;
+            pageNum++;
+            queueRenderPage(pageNum);
+        };
+
+        const closeViewer = () => {
+            pdfViewerContainer.classList.remove('visible');
+            pdfDoc = null;
+        };
+
+        prevBtn.addEventListener('click', onPrevPage);
+        nextBtn.addEventListener('click', onNextPage);
+        closeBtn.addEventListener('click', closeViewer);
+
         chapterLinks.forEach(link => {
             link.addEventListener('click', (event) => {
-                event.preventDefault(); // Stop the link from navigating away
-    
+                event.preventDefault();
                 const pdfUrl = link.href;
-                
-                // Set the iframe source to the clicked chapter's PDF
-                pdfIframe.src = pdfUrl;
-    
-                // Make the PDF viewer visible
+                const chapterTitle = link.querySelector('strong').textContent;
+
                 pdfViewerContainer.classList.add('visible');
-    
-                // Scroll the viewer into view for a better user experience
-                setTimeout(() => {
+                loader.classList.add('visible');
+                docTitleEl.textContent = chapterTitle;
+
+                pdfjsLib.getDocument(pdfUrl).promise.then(doc => {
+                    pdfDoc = doc;
+                    pageCountEl.textContent = pdfDoc.numPages;
+                    pageNum = 1; // Reset to first page
+                    renderPage(pageNum);
+                    loader.classList.remove('visible');
                     pdfViewerContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 100);
+                }).catch(err => {
+                    console.error('Error loading PDF:', err);
+                    loader.querySelector('span').textContent = 'Error loading chapter.';
+                });
             });
         });
     };
