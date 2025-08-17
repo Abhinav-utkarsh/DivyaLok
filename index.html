@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore Sanatan Dharma (Hinduism), the eternal path. Discover its rich culture, deities like Shiva and Vishnu, sacred scriptures, festivals, and philosophy.">
+    <title>Sanatan Dharma - The Eternal Path</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600;700&family=Tiro+Devanagari+Sanskrit:ital@0;1&display=swap" rel="stylesheet">
+
+    <!-- AOS (Animate on Scroll) Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕉️</text></svg>">
+</head>
+<body>
+
+    <!-- Pre-loader -->
+    <div id="preloader">
+        <div class="mandala-loader">
+            <div class="mandala-ring"></div>
+            <div class="mandala-ring"></div>
+            <div class="mandala-ring"></div>
+            <div class="mandala-core"></div>
+        </div>
+        <p class="preloader-text" data-lang-key="preloaderText"></p>
+        <p class="preloader-dedication">We miss you, Dr. Birendra Nath Mishra 'Chancharik'</p>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header id="header">
+        <nav class="container">
+            <a href="index.html" class="logo-container">
+                <span class="logo-main">
+                    <span class="logo-icon">🕉️</span><span class="logo-text">DivyaLok</span>
+                </span>
+                <span class="logo-sub">Eternal soul - Rooted in Sanatan Dharma</span>
+                <span class="logo-author" data-lang-key="footerAuthor">By: Abhinav Utkarsh Mishra</span>
+            </a>
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="#about" data-lang-key="navAbout">About</a></li>
+                    <li><a href="#deities" data-lang-key="navDeities">Deities</a></li>
+                    <li><a href="#scriptures" data-lang-key="navScriptures">Scriptures</a></li>
+                    <li><a href="gita-chapters.html" data-lang-key="navGita">Gita Chapters</a></li>
+                    <li><a href="#festivals" data-lang-key="navFestivals">Festivals</a></li>
+                    <li><a href="#temples" data-lang-key="navTemples">Temples</a></li>
+                    <li><a href="#blog" data-lang-key="navBlog">Blog</a></li>
+                </ul>
+                <button id="lang-toggle" class="lang-btn">हिन्दी</button>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero">
+            <div class="hero-background">
+                <div class="sun"></div>
+                <div class="parallax-mountains">
+                    <div class="mountain-layer" id="mountain-3" data-speed="-5"></div>
+                    <div class="mountain-layer" id="mountain-2" data-speed="10"></div>
+                    <div class="mountain-layer" id="mountain-1" data-speed="25"></div>
+                </div>
+            </div>
+            <div class="hero-content container" data-aos="fade-in">
+                <h1 class="sanskrit-heading" data-lang-key="heroTitle">Welcome to the Eternal Path</h1>
+                <h2 data-lang-key="heroSubtitle">Sanatan Dharma</h2>
+                <p data-lang-key="heroDescription">Discover the Roots of Hindu Culture, Beliefs, and Traditions</p>
+                <div class="cta-buttons">
+                    <a href="gita-chapters.html" class="btn" data-lang-key="heroBtn1">Gita Chapters</a>
+                    <a href="darshan.html" class="btn" data-lang-key="heroBtn2">Darshan</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="container" data-aos="fade-up">
+            <h2 class="section-title" data-lang-key="aboutTitle">What is Sanatan Dharma?</h2>
+            <div class="about-content">
+                <p data-lang-key="aboutText">
+                    Sanatan Dharma, often translated as the "Eternal Religion," is the indigenous name for Hinduism. It signifies a timeless, universal set of principles and truths. It is not founded by a single person but is a result of the collective wisdom of ancient sages and seers. Key concepts include <span class="highlight">Dharma</span> (righteous conduct), <span class="highlight">Karma</span> (the law of cause and effect), <span class="highlight">Samsara</span> (the cycle of birth, death, and reincarnation), and <span class="highlight">Moksha</span> (liberation from the cycle).
+                </p>
+                <!-- TODO: Create a philosophy.html page -->
+                <a href="#about" class="read-more" data-lang-key="aboutLink">Explore Philosophy →</a>
+            </div>
+        </section>
+
+        <!-- Major Gods & Goddesses Section -->
+        <section id="deities" class="container" data-aos="fade-up">
+            <h2 class="section-title" data-lang-key="deitiesTitle">Major Gods & Goddesses</h2>
+            <div class="deity-grid">
+                <!-- Deity cards will be dynamically inserted here by script.js -->
+            </div>
+        </section>
+
+        <!-- Scriptures Section -->
+        <section id="scriptures" class="container" data-aos="fade-up">
+            <h2 class="section-title" data-lang-key="scripturesTitle">Sacred Scriptures</h2>
+            <div class="scripture-tabs">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-tab="vedas" data-lang-key="scriptureTab1">Vedas</button>
+                    <button class="tab-btn" data-tab="upanishads" data-lang-key="scriptureTab2">Upanishads</button>
+                    <button class="tab-btn" data-tab="ramayana" data-lang-key="scriptureTab3">Ramayana</button>
+                    <button class="tab-btn" data-tab="mahabharata" data-lang-key="scriptureTab4">Mahabharata</button>
+                    <button class="tab-btn" data-tab="gita" data-lang-key="scriptureTab5">Bhagavad Gita</button>
+                </div>
+                <div class="tab-content-wrapper">
+                    <div id="vedas" class="tab-content active" data-aos="fade-in">
+                        <h3 data-lang-key="vedasTitle">The Vedas</h3>
+                        <p data-lang-key="vedasDesc">The most ancient Hindu scriptures, a large body of religious texts originating in ancient India. Composed in Vedic Sanskrit, the texts constitute the oldest layer of Sanskrit literature and the oldest scriptures of Hinduism.</p>
+                        <div class="scripture-list">
+                            <h4 data-lang-key="vedasListTitle">The Four Vedas:</h4>
+                            <ul class="clickable-list">
+                                <li><a href="scripture-details.html?name=rigveda" data-lang-key="veda1">Rigveda</a></li>
+                                <li><a href="scripture-details.html?name=yajurveda" data-lang-key="veda2">Yajurveda</a></li>
+                                <li><a href="scripture-details.html?name=samaveda" data-lang-key="veda3">Samaveda</a></li>
+                                <li><a href="scripture-details.html?name=atharvaveda" data-lang-key="veda4">Atharvaveda</a></li>
+                            </ul>
+                        </div>
+                        <!-- <a href="scripture-details.html?name=vedas" class="read-more" data-lang-key="readMore">Read More →</a> -->
+                    </div>
+                    <div id="upanishads" class="tab-content" data-aos="fade-in">
+                        <h3 data-lang-key="upanishadsTitle">The Upanishads</h3>
+                        <p data-lang-key="upanishadsDesc">A collection of texts of religious and philosophical nature, written in India probably between c. 800 BCE and c. 500 BCE, during a time when Indian society started to question the traditional Vedic religious order.</p>
+                        <div class="scripture-list">
+                            <h4 data-lang-key="upanishadsListTitle">Principal Upanishads:</h4>
+                            <ul>
+                                <li data-lang-key="upanishad1">Isha</li>
+                                <li data-lang-key="upanishad2">Kena</li>
+                                <li data-lang-key="upanishad3">Katha</li>
+                                <li data-lang-key="upanishad4">Prashna</li>
+                                <li data-lang-key="upanishad5">Mundaka</li>
+                                <li data-lang-key="upanishad6">Mandukya</li>
+                            </ul>
+                        </div>
+                        <a href="scripture-details.html?name=upanishads" class="read-more" data-lang-key="readMore">Read More →</a>
+                    </div>
+                    <div id="ramayana" class="tab-content" data-aos="fade-in">
+                        <h3 data-lang-key="ramayanaTitle">The Ramayana</h3>
+                        <p data-lang-key="ramayanaDesc">An ancient Indian epic poem which narrates the struggle of the divine prince Rama to rescue his wife Sita from the demon king Ravana. It explores human values and the concept of dharma.</p>
+                        <div class="scripture-list">
+                            <h4 data-lang-key="ramayanaListTitle">The Seven Kandas (Books):</h4>
+                            <ul>
+                                <li data-lang-key="kanda1">Bala Kanda</li>
+                                <li data-lang-key="kanda2">Ayodhya Kanda</li>
+                                <li data-lang-key="kanda3">Aranya Kanda</li>
+                                <li data-lang-key="kanda4">Kishkindha Kanda</li>
+                                <li data-lang-key="kanda5">Sundara Kanda</li>
+                                <li data-lang-key="kanda6">Yuddha Kanda</li>
+                                <li data-lang-key="kanda7">Uttara Kanda</li>
+                            </ul>
+                        </div>
+                        <a href="scripture-details.html?name=ramayana" class="read-more" data-lang-key="readMore">Read More →</a>
+                    </div>
+                    <div id="mahabharata" class="tab-content" data-aos="fade-in">
+                        <h3 data-lang-key="mahabharataTitle">The Mahabharata</h3>
+                        <p data-lang-key="mahabharataDesc">One of the two major Sanskrit epics of ancient India. It is an epic narrative of the Kurukshetra War and the fates of the Kaurava and the Pandava princes.</p>
+                        <div class="scripture-list">
+                            <h4 data-lang-key="mahabharataListTitle">The Eighteen Parvas (Books):</h4>
+                            <ul>
+                                <li data-lang-key="parva1">Adi Parva</li>
+                                <li data-lang-key="parva2">Sabha Parva</li>
+                                <li data-lang-key="parva3">Vana Parva</li>
+                                <li data-lang-key="parva4">Virata Parva</li>
+                                <li data-lang-key="parva5">Udyoga Parva</li>
+                                <li data-lang-key="parva6">...and more</li>
+                            </ul>
+                        </div>
+                        <a href="scripture-details.html?name=mahabharata" class="read-more" data-lang-key="readMore">Read More →</a>
+                    </div>
+                    <div id="gita" class="tab-content" data-aos="fade-in">
+                        <h3 data-lang-key="gitaTitle">The Bhagavad Gita</h3>
+                        <p data-lang-key="gitaDesc">A 700-verse Hindu scripture that is part of the epic Mahabharata, it presents a synthesis of Hindu ideas about dharma, theistic bhakti, and the yogic paths to moksha.</p>
+                        <div class="scripture-list">
+                            <h4 data-lang-key="gitaListTitle">Key Concepts:</h4>
+                            <ul>
+                                <li data-lang-key="gitaConcept1">Karma Yoga</li>
+                                <li data-lang-key="gitaConcept2">Jnana Yoga</li>
+                                <li data-lang-key="gitaConcept3">Bhakti Yoga</li>
+                                <li data-lang-key="gitaConcept4">Dharma</li>
+                                <li data-lang-key="gitaConcept5">Moksha</li>
+                            </ul>
+                        </div>
+                        <!-- <a href="scripture-details.html?name=gita" class="read-more" data-lang-key="readMore">Read More →</a> -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Festivals Section -->
+        <section id="festivals" class="container" data-aos="fade-up">
+            <h2 class="section-title" data-lang-key="festivalsTitle">Festivals & Rituals</h2>
+            <div class="timeline">
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-icon">🪔</div>
+                    <div class="timeline-content">
+                        <h3 data-lang-key="diwaliTitle">Diwali</h3>
+                        <p data-lang-key="diwaliDesc">The festival of lights, symbolizing the victory of light over darkness, good over evil, and knowledge over ignorance.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-left">
+                    <div class="timeline-icon">🎨</div>
+                    <div class="timeline-content">
+                        <h3 data-lang-key="holiTitle">Holi</h3>
+                        <p data-lang-key="holiDesc">The festival of colors, celebrating the arrival of spring and the triumph of good over evil. A day of joyful celebration.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-icon">🔱</div>
+                    <div class="timeline-content">
+                        <h3 data-lang-key="navratriTitle">Navratri</h3>
+                        <p data-lang-key="navratriDesc">A nine-night festival dedicated to the worship of the goddess Durga, celebrating her victory over the demon Mahishasura.</p>
+                    </div>
+                </div>
+                 <div class="timeline-item" data-aos="fade-left">
+                    <div class="timeline-icon">🦚</div>
+                    <div class="timeline-content">
+                        <h3 data-lang-key="janmashtamiTitle">Janmashtami</h3>
+                        <p data-lang-key="janmashtamiDesc">Celebrates the birth of Lord Krishna, an avatar of Vishnu. It involves fasting, singing, and dramatic enactments.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Temples Section (Parallax) -->
+        <section id="temples" class="parallax-section" style="background-image: url('images/temple-bg.jpg');">
+            <div class="parallax-content container">
+                <h2 data-lang-key="templesTitle">Famous Temples</h2>
+                <div class="temple-grid">
+                    <div class="temple-card" data-aos="fade-up" data-aos-delay="100">
+                        <h3 data-lang-key="temple1Name">Kashi Vishwanath</h3>
+                        <a href="temple-details.html?temple=kashi" class="btn" data-lang-key="templeBtn">Know More</a>
+                    </div>
+                    <div class="temple-card" data-aos="fade-up" data-aos-delay="200">
+                        <h3 data-lang-key="temple2Name">Kedarnath</h3>
+                        <a href="temple-details.html?temple=kedarnath" class="btn" data-lang-key="templeBtn">Know More</a>
+                    </div>
+                    <div class="temple-card" data-aos="fade-up" data-aos-delay="300">
+                        <h3 data-lang-key="temple3Name">Tirupati Balaji</h3>
+                        <a href="temple-details.html?temple=tirupati" class="btn" data-lang-key="templeBtn">Know More</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Daily Mantras Section -->
+        <section id="mantras" class="container" data-aos="fade-up">
+            <h2 class="section-title" data-lang-key="mantrasTitle">Daily Prayers & Mantras</h2>
+            <div class="mantra-display">
+                <div class="mantra-card" data-aos="zoom-in">
+                    <h3 data-lang-key="gayatriTitle">Gayatri Mantra</h3>
+                    <audio id="gayatri-audio" src="audio/gayatri.mp3" preload="none"></audio>
+                    <p class="mantra-text" id="gayatri-mantra"></p>
+                    <button class="btn-audio" data-lang-key="playAudio" data-audio-id="gayatri-audio">Play Audio 🔊</button>
+                </div>
+                <div class="mantra-card" data-aos="zoom-in" data-aos-delay="200">
+                    <h3 data-lang-key="mahamrityunjayaTitle">Mahamrityunjaya Mantra</h3>
+                    <audio id="mahamrityunjaya-audio" src="audio/mahamrityunjaya.mp3" preload="none"></audio>
+                    <p class="mantra-text" id="mahamrityunjaya-mantra"></p>
+                    <button class="btn-audio" data-lang-key="playAudio" data-audio-id="mahamrityunjaya-audio">Play Audio 🔊</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Section -->
+        <section id="blog" class="container" data-aos="fade-up">
+            <h2 class="section-title" data-lang-key="blogTitle">Articles & Insights</h2>
+            <div class="blog-grid">
+                <div class="blog-card" data-aos="fade-up" data-aos-delay="100">
+                    <img src="images/Meditation.jfif" alt="Blog Image">
+                    <div class="blog-card-content">
+                        <h3 data-lang-key="blog1Title">Benefits of Meditation</h3>
+                        <p data-lang-key="blog1Desc">Explore how daily meditation can bring peace, clarity, and spiritual growth into your life.</p>
+                        <!-- <a href="#" class="read-more" data-lang-key="readArticle">Read Article →</a> -->
+                    </div>
+                </div>
+                <div class="blog-card" data-aos="fade-up" data-aos-delay="200">
+                    <img src="images/Rudraksha.jpg" alt="Blog Image">
+                    <div class="blog-card-content">
+                        <h3 data-lang-key="blog2Title">The Spiritual Meaning of Rudraksha</h3>
+                        <p data-lang-key="blog2Desc">Understand the significance of Rudraksha beads and their connection to Lord Shiva.</p>
+                        <!-- <a href="#" class="read-more" data-lang-key="readArticle">Read Article →</a> -->
+                    </div>
+                </div>
+                <div class="blog-card" data-aos="fade-up" data-aos-delay="300">
+                    <img src="images/Fasting.jfif" alt="Blog Image">
+                    <div class="blog-card-content">
+                        <h3 data-lang-key="blog3Title">Why Fasting is Done on Ekadashi</h3>
+                        <p data-lang-key="blog3Desc">Learn about the scientific and spiritual reasons behind the sacred practice of fasting on Ekadashi.</p>
+                        <!-- <a href="#" class="read-more" data-lang-key="readArticle">Read Article →</a> -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 data-lang-key="footerContact">Contact Us</h4>
+                    <p><a href="mailto:abhinavutkarsh3@gmail.com" class="footer-link">abhinavutkarsh3@gmail.com</a></p>
+                </div>
+                <div class="footer-section">
+                    <h4 data-lang-key="footerFollow">Follow Us</h4>
+                    <div class="social-icons">
+                        <!-- TODO: Add actual social media URLs -->
+                        <a href="#" target="_blank" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.25 6.5 1.75 1.75 0 016.5 8.25zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.62 1.62 0 0013 14.19V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.1 1.16 3.1 3.99z"></path></svg></a>
+                        <a href="#" target="_blank" aria-label="GitHub"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"></path></svg></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4 data-lang-key="footerDisclaimer">Disclaimer</h4>
+                    <p data-lang-key="footerDisclaimerText">This website is for educational and spiritual purposes only.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>
+                    <span data-lang-key="footerDevotion">Made with devotion 💛</span>
+                    <span class="author-credit" data-lang-key="footerAuthor">By: Abhinav Utkarsh Mishra</span>
+                </p>
+                <p data-lang-key="footerRights">&copy; 2025 Av_eSAFE . All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+    <script src="https://bots.easy-peasy.ai/chat.min.js" data-chat-url="https://bots.easy-peasy.ai/bot/d7237456-8aee-47fb-ad93-5c3b31eb4bda" data-btn-position="bottom-right" data-widget-btn-color="#f4ae17 " defer> </script>
+</body>
+
+</html>
