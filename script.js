@@ -1190,114 +1190,60 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // --- GITA CHAPTERS PAGE LOGIC ---
+    // --- GITA CHAPTERS PAGE LOGIC (IFRAME METHOD) ---
     const initGitaChaptersPage = () => {
-        // Check if we are on the Gita Chapters page
-        const chapterLinks = document.querySelectorAll('.gita-pdf-link');
-        if (!chapterLinks.length) return;
-
         const pdfViewerContainer = document.getElementById('pdf-viewer-container');
-        const canvas = document.getElementById('pdf-canvas');
-        const ctx = canvas.getContext('2d');
-        const loader = document.getElementById('pdf-loader');
-
+        const chapterLinks = document.querySelectorAll('.gita-pdf-link');
+        
+        // Exit if the necessary elements aren't on this page.
+        if (!pdfViewerContainer || !chapterLinks.length) {
+            return;
+        }
+    
         const docTitleEl = document.getElementById('pdf-doc-title');
-        const pageNumEl = document.getElementById('pdf-page-num');
-        const pageCountEl = document.getElementById('pdf-page-count');
-        const prevBtn = document.getElementById('pdf-prev-btn');
-        const nextBtn = document.getElementById('pdf-next-btn');
         const closeBtn = document.getElementById('pdf-close-btn');
-
-        let pdfDoc = null;
-        let pageNum = 1;
-        let pageRendering = false;
-        let pageNumPending = null;
-        const scale = 1.8; // Increase scale for better quality
-
-        const renderPage = num => {
-            pageRendering = true;
-            // Using promise to fetch page
-            pdfDoc.getPage(num).then(page => {
-                const viewport = page.getViewport({ scale: scale });
-                canvas.height = viewport.height;
-                canvas.width = viewport.width;
-
-                // Render PDF page into canvas context
-                const renderContext = {
-                    canvasContext: ctx,
-                    viewport: viewport
-                };
-                const renderTask = page.render(renderContext);
-
-                // Wait for rendering to finish
-                renderTask.promise.then(() => {
-                    pageRendering = false;
-                    if (pageNumPending !== null) {
-                        // New page rendering is pending
-                        renderPage(pageNumPending);
-                        pageNumPending = null;
-                    }
-                });
-            });
-
-            // Update page counters
-            pageNumEl.textContent = num;
-            prevBtn.disabled = (num <= 1);
-            nextBtn.disabled = (num >= pdfDoc.numPages);
-        };
-
-        const queueRenderPage = num => {
-            if (pageRendering) {
-                pageNumPending = num;
-            } else {
-                renderPage(num);
-            }
-        };
-
-        const onPrevPage = () => {
-            if (pageNum <= 1) return;
-            pageNum--;
-            queueRenderPage(pageNum);
-        };
-
-        const onNextPage = () => {
-            if (pageNum >= pdfDoc.numPages) return;
-            pageNum++;
-            queueRenderPage(pageNum);
+        const pdfIframe = document.getElementById('pdf-iframe');
+        const loader = document.getElementById('pdf-loader');
+    
+        const openViewer = (url, title) => {
+            docTitleEl.textContent = title;
+            pdfIframe.src = ''; // Clear previous PDF to show loader properly
+            pdfViewerContainer.classList.add('visible');
+            loader.classList.add('visible');
+            
+            // Set the src after a short delay to ensure the loader is visible first
+            setTimeout(() => {
+                pdfIframe.src = url;
+            }, 100);
+    
+            pdfViewerContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
         };
 
         const closeViewer = () => {
             pdfViewerContainer.classList.remove('visible');
-            pdfDoc = null;
+            pdfIframe.src = ''; // Clear the iframe src to stop loading/rendering
         };
-
-        prevBtn.addEventListener('click', onPrevPage);
-        nextBtn.addEventListener('click', onNextPage);
-        closeBtn.addEventListener('click', closeViewer);
-
+    
+        // Hide loader once the iframe has loaded its content
+        pdfIframe.addEventListener('load', () => {
+            loader.classList.remove('visible');
+        });
+    
         chapterLinks.forEach(link => {
             link.addEventListener('click', (event) => {
                 event.preventDefault();
                 const pdfUrl = link.href;
-                const chapterTitle = link.querySelector('strong').textContent;
-
-                pdfViewerContainer.classList.add('visible');
-                loader.classList.add('visible');
-                docTitleEl.textContent = chapterTitle;
-
-                pdfjsLib.getDocument(pdfUrl).promise.then(doc => {
-                    pdfDoc = doc;
-                    pageCountEl.textContent = pdfDoc.numPages;
-                    pageNum = 1; // Reset to first page
-                    renderPage(pageNum);
-                    loader.classList.remove('visible');
-                    pdfViewerContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }).catch(err => {
-                    console.error('Error loading PDF:', err);
-                    loader.querySelector('span').textContent = 'Error loading chapter.';
-                });
+                
+                // More robust way to get the title by using the translation data directly.
+                const strongEl = link.querySelector('strong');
+                const langKey = strongEl.getAttribute('data-lang-key');
+                const currentLang = localStorage.getItem('language') || 'en';
+                const chapterTitle = translations[currentLang][langKey] || strongEl.textContent; // Fallback to the element's text
+                openViewer(pdfUrl, chapterTitle); // Pass the correct title to the viewer
             });
         });
+    
+        closeBtn.addEventListener('click', closeViewer);
     };
 
     // --- PRE-LOADER LOGIC ---
