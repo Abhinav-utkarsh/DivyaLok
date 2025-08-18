@@ -66,6 +66,38 @@
             display: block;
         }
 
+        /* --- New PDF Viewer Styles --- */
+        #pdf-render-area {
+            width: 100%;
+            height: 85vh;
+            overflow-y: auto; /* Allow scrolling for tall pages */
+            background-color: #525659; /* A neutral background for the canvas */
+            text-align: center; /* Center the canvas */
+            padding: 1rem 0;
+        }
+
+        #pdf-canvas {
+            border: 1px solid #333;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .pdf-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .pdf-controls button {
+            background: var(--secondary-color);
+            color: var(--dark-color);
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0.25rem 0.75rem;
+            transition: background-color 0.3s;
+        }
+
         .pdf-viewer-header {
             display: flex;
             justify-content: space-between;
@@ -82,6 +114,15 @@
             font-size: 1.2rem;
         }
 
+        .pdf-controls button:hover {
+            background-color: #f9c851; /* Lighter shade of secondary */
+        }
+
+        .pdf-controls button:disabled {
+            background-color: #777;
+            cursor: not-allowed;
+        }
+
         #pdf-close-btn {
             background: transparent;
             border: none;
@@ -93,13 +134,6 @@
         }
         #pdf-close-btn:hover {
             color: var(--secondary-color);
-        }
-
-        #pdf-iframe {
-            display: block; /* Removes bottom space */
-            width: 100%;
-            height: 85vh; /* Use viewport height for better responsiveness */
-            border: none;
         }
 
         .pdf-loader {
@@ -121,7 +155,7 @@
         }
 
         .pdf-loader span {
-            margin-top: 1rem;
+            margin-top: 1.5rem;
             font-weight: 600;
             color: var(--dark-color);
         }
@@ -204,13 +238,20 @@
                 <div id="pdf-viewer-container" class="pdf-viewer-container">
                     <div id="pdf-loader" class="pdf-loader">
                         <div class="mandala-loader-small"></div>
-                        <span>Loading Chapter...</span>
+                        <span id="loader-text">Loading Chapter...</span>
                     </div>
                     <div class="pdf-viewer-header">
                         <span id="pdf-doc-title"></span>
+                        <div class="pdf-controls">
+                            <button id="pdf-prev-btn" title="Previous Page">◄</button>
+                            <span id="pdf-page-num"></span> / <span id="pdf-page-count"></span>
+                            <button id="pdf-next-btn" title="Next Page">►</button>
+                        </div>
                         <button id="pdf-close-btn" title="Close Viewer">✖</button>
                     </div>
-                    <iframe id="pdf-iframe" title="Gita Chapter PDF Viewer"></iframe>
+                    <div id="pdf-render-area">
+                        <canvas id="pdf-canvas"></canvas>
+                    </div>
                 </div>
 
             </div>
@@ -248,7 +289,121 @@
     </footer>
 
     <!-- Your Existing Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="script.js" defer></script>
+
+    <!-- Page-specific PDF Viewer Script -->
+    <script>
+        // This script replaces the old iframe-based PDF viewer logic.
+        // For better organization, you could move this into script.js and ensure it only runs on this page.
+        document.addEventListener('DOMContentLoaded', () => {
+            const pdfViewerContainer = document.getElementById('pdf-viewer-container');
+            if (pdfViewerContainer) {
+                const pdfLinks = document.querySelectorAll('.gita-pdf-link');
+                const pdfLoader = document.getElementById('pdf-loader');
+                const loaderText = document.getElementById('loader-text');
+                const closeBtn = document.getElementById('pdf-close-btn');
+                const docTitle = document.getElementById('pdf-doc-title');
+                const canvas = document.getElementById('pdf-canvas');
+                const ctx = canvas.getContext('2d');
+                const prevBtn = document.getElementById('pdf-prev-btn');
+                const nextBtn = document.getElementById('pdf-next-btn');
+                const pageNumEl = document.getElementById('pdf-page-num');
+                const pageCountEl = document.getElementById('pdf-page-count');
+                const pdfRenderArea = document.getElementById('pdf-render-area');
+
+                // Set worker source for PDF.js - THIS IS CRUCIAL for it to work
+                pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js`;
+
+                let pdfDoc = null;
+                let pageNum = 1;
+                let pageRendering = false;
+                let pageNumPending = null;
+
+                const renderPage = num => {
+                    pageRendering = true;
+                    pdfDoc.getPage(num).then(page => {
+                        // Calculate the scale to fit the page within the container's width.
+                        // We subtract a small amount (e.g., 16px) for padding/breathing room.
+                        const desiredWidth = pdfRenderArea.clientWidth - 16;
+                        const viewportAtScale1 = page.getViewport({ scale: 1 });
+                        const scale = desiredWidth / viewportAtScale1.width;
+                        const viewport = page.getViewport({ scale: scale });
+
+                        canvas.height = viewport.height;
+                        canvas.width = viewport.width;
+
+                        const renderContext = {
+                            canvasContext: ctx,
+                            viewport: viewport
+                        };
+                        const renderTask = page.render(renderContext);
+
+                        renderTask.promise.then(function () {
+                            pageRendering = false;
+                            if (pageNumPending !== null) {
+                                renderPage(pageNumPending);
+                                pageNumPending = null;
+                            }
+                            pageNumEl.textContent = num;
+                            pdfRenderArea.scrollTop = 0; // Scroll to top of new page
+                        });
+                    });
+                };
+
+                const queueRenderPage = num => {
+                    if (pageRendering) {
+                        pageNumPending = num;
+                    } else {
+                        renderPage(num);
+                    }
+                };
+
+                const updateNavButtons = () => {
+                    prevBtn.disabled = (pageNum <= 1);
+                    nextBtn.disabled = (pageNum >= pdfDoc.numPages);
+                };
+
+                const showViewer = (url, title) => {
+                    docTitle.textContent = title;
+                    pdfViewerContainer.classList.add('visible');
+                    pdfLoader.classList.add('visible');
+                    loaderText.textContent = 'Loading Chapter...';
+                    document.body.style.overflow = 'hidden';
+
+                    pdfDoc = null;
+                    pageNum = 1;
+
+                    pdfjsLib.getDocument(url).promise.then(pdf => {
+                        pdfDoc = pdf;
+                        pageCountEl.textContent = pdfDoc.numPages;
+                        renderPage(pageNum);
+                        updateNavButtons();
+                        pdfLoader.classList.remove('visible');
+                    }, reason => {
+                        console.error(reason);
+                        loaderText.textContent = 'Error loading PDF.';
+                    });
+                };
+
+                const closeViewer = () => {
+                    pdfViewerContainer.classList.remove('visible');
+                    document.body.style.overflow = 'auto';
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                };
+
+                pdfLinks.forEach(link => link.addEventListener('click', e => {
+                    e.preventDefault();
+                    showViewer(link.getAttribute('href'), link.querySelector('strong').textContent);
+                }));
+
+                closeBtn.addEventListener('click', closeViewer);
+                prevBtn.addEventListener('click', () => { if (pageNum > 1) { pageNum--; queueRenderPage(pageNum); updateNavButtons(); } });
+                nextBtn.addEventListener('click', () => { if (pageNum < pdfDoc.numPages) { pageNum++; queueRenderPage(pageNum); updateNavButtons(); } });
+                window.addEventListener('keydown', e => { if (e.key === 'Escape' && pdfViewerContainer.classList.contains('visible')) closeViewer(); });
+            }
+        });
+    </script>
 </body>
 </html>
