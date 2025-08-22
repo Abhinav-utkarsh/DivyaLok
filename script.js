@@ -1,15 +1,30 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    const fixNavLinks = () => {
+        const path = window.location.pathname;
+        const isIndexPage = path.endsWith('/') || path.endsWith('index.html');
+        
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                if (!isIndexPage) {
+                    link.setAttribute('href', `index.html${href}`);
+                }
+            }
+        });
+    };
+    fixNavLinks();
+
     // --- LANGUAGE TRANSLATION ---
     const translations = {
         en: {
-            navAbout: "About",
+            navAboutPage: "About Us",
             navDeities: "Deities",
             navScriptures: "Scriptures",
             navGita: "Gita Chapters",
             navFestivals: "Festivals",
             navTemples: "Temples",
-            navBlog: "Blog",
+            navContact: "Contact Us",
             heroTitle: "Welcome to the Eternal Path",
             heroSubtitle: "Sanatan Dharma",
             heroDescription: "Discover the Roots of Hindu Culture, Beliefs, and Traditions",
@@ -19,6 +34,13 @@ document.addEventListener('DOMContentLoaded', () => {
             aboutTitle: "What is Sanatan Dharma?",
             aboutText: `Sanatan Dharma, often translated as the "Eternal Religion," is the indigenous name for Hinduism. It signifies a timeless, universal set of principles and truths. It is not founded by a single person but is a result of the collective wisdom of ancient sages and seers. Key concepts include Dharma (righteous conduct), Karma (the law of cause and effect), Samsara (the cycle of birth, death, and reincarnation), and Moksha (liberation from the cycle).`,
             aboutLink: "Explore Philosophy →",
+            aboutPageTitle: "About DivyaLok",
+            aboutPageMissionTitle: "Our Mission",
+            aboutPageMissionText: "Welcome to DivyaLok, your digital sanctuary for exploring the profound wisdom of Sanatan Dharma. Our mission is to provide a beautiful, accessible, and authentic resource for seekers, scholars, and anyone curious about Hindu philosophy, culture, and traditions. We believe that the timeless knowledge of the Vedas, Upanishads, and the Bhagavad Gita holds immense value for modern life, offering guidance on peace, purpose, and righteous living.",
+            aboutPageVisionTitle: "Our Vision",
+            aboutPageVisionText: "We envision DivyaLok as a bridge connecting ancient heritage with the digital generation. Through interactive features like our virtual aarti, bilingual content, and in-depth explorations of scriptures, we aim to create an immersive experience that is both educational and spiritually uplifting. This project is a labor of love, built with modern web technologies to ensure it is fast, responsive, and available to everyone, everywhere.",
+            aboutPageTeamTitle: "The Team",
+            aboutPageTeamText: "DivyaLok was created by a passionate developer dedicated to preserving and sharing the richness of Sanatan Dharma. This project is an open-source initiative, and we welcome contributions from anyone who shares our vision.",
             deitiesTitle: "Major Gods & Goddesses",
             shivaTitle: "Lord Shiva 🕉️",
             shivaDesc: "The Destroyer and Transformer within the Trimurti, the supreme being who creates, protects and transforms the universe.",
@@ -108,6 +130,31 @@ document.addEventListener('DOMContentLoaded', () => {
             footerFollow: "Follow Us",
             footerDisclaimer: "Disclaimer",
             footerDisclaimerText: "This website is for educational and spiritual purposes only.",
+            footerQuickLinks: "Quick Links",
+            navPrivacy: "Privacy Policy",
+            contactFormName: "Your Name",
+            privacyTitle: "Privacy Policy for DivyaLok",
+            privacyLogFiles: "Log Files",
+            privacyCookies: "Cookies and Web Beacons",
+            privacyAdPartners: "Advertising Partners",
+            privacyInfoCollect: "Information You Provide",
+            privacyConsent: "Consent",
+            contactPageSubtitle: "Have a question or feedback? We'd love to hear from you!",
+            privacyLastUpdated: "Last updated:",
+            privacyIntro: "At DivyaLok, the privacy of our visitors is of extreme importance to us. This privacy policy document outlines the types of personal information that is received and collected by DivyaLok and how it is used.",
+            privacyLogFilesText: "Like many other Web sites, DivyaLok makes use of log files. The information inside the log files includes internet protocol (IP) addresses, type of browser, Internet Service Provider (ISP), date/time stamp, referring/exit pages, and number of clicks to analyze trends, administer the site, track user's movement around the site, and gather demographic information. IP addresses and other such information are not linked to any information that is personally identifiable.",
+            privacyCookiesText: "DivyaLok does use cookies to store information about visitors' preferences, to record user-specific information on which pages the user accesses or visits, and to personalize or customize our web page content based upon visitors' browser type or other information that the visitor sends via their browser.",
+            privacyAdPartnersText1: "As an open-source project, we may partner with third-party advertising companies, such as Google AdSense, to serve ads when you visit our website. These companies may use information (not including your name, address, email address, or telephone number) about your visits to this and other websites in order to provide advertisements about goods and services of interest to you.",
+            privacyAdPartnersText2: "Google's use of the DART cookie enables it to serve ads to users based on their visit to our sites and other sites on the Internet. Users may opt out of the use of the DART cookie by visiting the <a href=\"https://policies.google.com/technologies/ads\" target=\"_blank\" rel=\"noopener noreferrer\">Google ad and content network privacy policy</a>.",
+            privacyAdPartnersText3: "We have no access to or control over these cookies that are used by third-party advertisers. You should consult the respective privacy policies of these third-party ad servers for more detailed information on their practices as well as for instructions about how to opt-out of certain practices.",
+            privacyInfoCollectText: "If you use our contact form, we collect the name and email address you provide solely for the purpose of responding to your inquiry. We do not use this information for marketing purposes or share it with third parties.",
+            privacyConsentText: "By using our website, you hereby consent to our Privacy Policy and agree to its terms. If you require any more information or have any questions about our privacy policy, please feel free to contact us.",
+            contactFormEmail: "Your Email",
+            contactFormMessage: "Your Message",
+            contactFormSending: "Sending...",
+            contactFormSuccess: "Thank you! Your message has been sent successfully.",
+            contactFormError: "Oops! Something went wrong. Please try again later.",
+            contactFormSubmit: "Send Message",
             footerDevotion: "Made with devotion 💛",
             footerRights: "© 2025 Av_eSAFE . All Rights Reserved.",
             temple1Name: "Kashi Vishwanath",
@@ -222,13 +269,13 @@ document.addEventListener('DOMContentLoaded', () => {
             krishnaMetaDescription: "Delve into the life and teachings of Lord Krishna, the eighth avatar of Vishnu. Learn about his divine play (Lila), the Bhagavad Gita, and his role as a supreme guide."
         },
         hi: {
-            navAbout: "परिचय",
+            navAboutPage: "हमारे बारे में",
             navDeities: "देवी-देवता",
             navScriptures: "ग्रंथ",
             navGita: "गीता अध्याय",
             navFestivals: "त्योहार",
             navTemples: "मंदिर",
-            navBlog: "लेख",
+            navContact: "संपर्क करें",
             heroTitle: "सनातन पथ में आपका स्वागत है",
             heroSubtitle: "सनातन धर्म",
             heroDescription: "हिंदू संस्कृति, विश्वास और परंपराओं की जड़ों की खोज करें",
@@ -238,6 +285,13 @@ document.addEventListener('DOMContentLoaded', () => {
             aboutTitle: "सनातन धर्म क्या है?",
             aboutText: `सनातन धर्म, जिसे अक्सर "शाश्वत धर्म" के रूप में अनुवादित किया जाता है, हिंदू धर्म का स्वदेशी नाम है। यह कालातीत, सार्वभौमिक सिद्धांतों और सत्यों का प्रतीक है। इसकी स्थापना किसी एक व्यक्ति द्वारा नहीं की गई है, बल्कि यह प्राचीन ऋषियों और द्रष्टाओं के सामूहिक ज्ञान का परिणाम है। मुख्य अवधारणाओं में धर्म, कर्म, संसार (जन्म, मृत्यु और पुनर्जन्म का चक्र), और मोक्ष (चक्र से मुक्ति) शामिल हैं।`,
             aboutLink: "दर्शन का अन्वेषण करें →",
+            aboutPageTitle: "दिव्यलोक के बारे में",
+            aboutPageMissionTitle: "हमारा मिशन",
+            aboutPageMissionText: "दिव्यलोक में आपका स्वागत है, जो सनातन धर्म के गहन ज्ञान की खोज के लिए आपका डिजिटल अभयारण्य है। हमारा मिशन साधकों, विद्वानों और हिंदू दर्शन, संस्कृति और परंपराओं के बारे में जिज्ञासु किसी भी व्यक्ति के लिए एक सुंदर, सुलभ और प्रामाणिक संसाधन प्रदान करना है। हमारा मानना है कि वेदों, उपनिषदों और भगवद् गीता का कालातीत ज्ञान आधुनिक जीवन के लिए अत्यधिक मूल्य रखता है, जो शांति, उद्देश्य और धार्मिक जीवन पर मार्गदर्शन प्रदान करता है।",
+            aboutPageVisionTitle: "हमारी दृष्टि",
+            aboutPageVisionText: "हम दिव्यलोक को प्राचीन विरासत को डिजिटल पीढ़ी से जोड़ने वाले एक सेतु के रूप में देखते हैं। हमारी आभासी आरती, द्विभाषी सामग्री और शास्त्रों के गहन अन्वेषण जैसी इंटरैक्टिव सुविधाओं के माध्यम से, हमारा लक्ष्य एक ऐसा immersive अनुभव बनाना है जो शैक्षिक और आध्यात्मिक रूप से उत्थानकारी दोनों हो। यह परियोजना प्रेम का श्रम है, जिसे आधुनिक वेब तकनीकों के साथ बनाया गया है ताकि यह सुनिश्चित हो सके कि यह तेज, उत्तरदायी और हर जगह सभी के लिए उपलब्ध है।",
+            aboutPageTeamTitle: "टीम",
+            aboutPageTeamText: "दिव्यलोक को सनातन धर्म की समृद्धि को संरक्षित करने और साझा करने के लिए समर्पित एक भावुक डेवलपर द्वारा बनाया गया था। यह परियोजना एक ओपन-सोर्स पहल है, और हम उन सभी के योगदान का स्वागत करते हैं जो हमारी दृष्टि साझा करते हैं।",
             deitiesTitle: "प्रमुख देवी-देवता",
             shivaTitle: "भगवान शिव 🕉️",
             shivaDesc: "त्रिमूर्ति के भीतर संहारक और परिवर्तक, जो ब्रह्मांड का निर्माण, संरक्षण और परिवर्तन करते हैं।",
@@ -327,6 +381,31 @@ document.addEventListener('DOMContentLoaded', () => {
             footerFollow: "हमें फॉलो करें",
             footerDisclaimer: "अस्वीकरण",
             footerDisclaimerText: "यह वेबसाइट केवल शैक्षिक और आध्यात्मिक उद्देश्यों के लिए है।",
+            footerQuickLinks: "त्वरित लिंक",
+            navPrivacy: "गोपनीयता नीति",
+            contactFormName: "आपका नाम",
+            privacyTitle: "दिव्यलोक के लिए गोपनीयता नीति",
+            privacyLogFiles: "लॉग फ़ाइलें",
+            privacyCookies: "कुकीज़ और वेब बीकन",
+            privacyAdPartners: "विज्ञापन भागीदार",
+            privacyInfoCollect: "आपके द्वारा प्रदान की गई जानकारी",
+            privacyConsent: "सहमति",
+            contactPageSubtitle: "कोई प्रश्न या प्रतिक्रिया है? हमें आपसे सुनना अच्छा लगेगा!",
+            privacyLastUpdated: "अंतिम अपडेट:",
+            privacyIntro: "दिव्यलोक में, हमारे आगंतुकों की गोपनीयता हमारे लिए अत्यंत महत्वपूर्ण है। यह गोपनीयता नीति दस्तावेज़ दिव्यलोक द्वारा प्राप्त और एकत्र की जाने वाली व्यक्तिगत जानकारी के प्रकार और इसका उपयोग कैसे किया जाता है, की रूपरेखा तैयार करता है।",
+            privacyLogFilesText: "कई अन्य वेब साइटों की तरह, दिव्यलोक लॉग फ़ाइलों का उपयोग करता है। लॉग फ़ाइलों के अंदर की जानकारी में इंटरनेट प्रोटोकॉल (आईपी) पते, ब्राउज़र का प्रकार, इंटरनेट सेवा प्रदाता (आईएसपी), दिनांक/समय टिकट, संदर्भित/निकास पृष्ठ, और रुझानों का विश्लेषण करने, साइट का प्रशासन करने, साइट के चारों ओर उपयोगकर्ता के आंदोलन को ट्रैक करने और जनसांख्यिकीय जानकारी इकट्ठा करने के लिए क्लिकों की संख्या शामिल है। आईपी पते और ऐसी अन्य जानकारी किसी भी ऐसी जानकारी से नहीं जुड़ी होती है जो व्यक्तिगत रूप से पहचानी जा सके।",
+            privacyCookiesText: "दिव्यलोक आगंतुकों की वरीयताओं के बारे में जानकारी संग्रहीत करने, उपयोगकर्ता-विशिष्ट जानकारी को रिकॉर्ड करने के लिए कुकीज़ का उपयोग करता है, जिस पर उपयोगकर्ता पहुँचता है या जाता है, और आगंतुकों के ब्राउज़र प्रकार या अन्य जानकारी के आधार पर हमारे वेब पेज की सामग्री को वैयक्तिकृत या अनुकूलित करने के लिए जो आगंतुक अपने ब्राउज़र के माध्यम से भेजता है।",
+            privacyAdPartnersText1: "एक ओपन-सोर्स प्रोजेक्ट के रूप में, हम तृतीय-पक्ष विज्ञापन कंपनियों, जैसे कि Google AdSense, के साथ साझेदारी कर सकते हैं, जब आप हमारी वेबसाइट पर जाते हैं तो विज्ञापन दिखाने के लिए। ये कंपनियाँ आपकी इस और अन्य वेबसाइटों की यात्राओं के बारे में जानकारी (आपका नाम, पता, ईमेल पता, या टेलीफोन नंबर शामिल नहीं) का उपयोग कर सकती हैं ताकि आपको रुचि के सामान और सेवाओं के बारे में विज्ञापन प्रदान किए जा सकें।",
+            privacyAdPartnersText2: "Google द्वारा DART कुकी का उपयोग इसे हमारी साइटों और इंटरनेट पर अन्य साइटों पर उनकी यात्रा के आधार पर उपयोगकर्ताओं को विज्ञापन दिखाने में सक्षम बनाता है। उपयोगकर्ता <a href=\"https://policies.google.com/technologies/ads\" target=\"_blank\" rel=\"noopener noreferrer\">Google विज्ञापन और सामग्री नेटवर्क गोपनीयता नीति</a> पर जाकर DART कुकी के उपयोग से बाहर निकल सकते हैं।",
+            privacyAdPartnersText3: "हमारे पास इन कुकीज़ पर कोई पहुँच या नियंत्रण नहीं है जो तृतीय-पक्ष विज्ञापनदाताओं द्वारा उपयोग की जाती हैं। आपको उनकी प्रथाओं के बारे में अधिक विस्तृत जानकारी के साथ-साथ कुछ प्रथाओं से बाहर निकलने के निर्देशों के लिए इन तृतीय-पक्ष विज्ञापन सर्वरों की संबंधित गोपनीयता नीतियों से परामर्श करना चाहिए।",
+            privacyInfoCollectText: "यदि आप हमारे संपर्क फ़ॉर्म का उपयोग करते हैं, तो हम आपके द्वारा प्रदान किए गए नाम और ईमेल पते को केवल आपकी जांच का जवाब देने के उद्देश्य से एकत्र करते हैं। हम इस जानकारी का उपयोग विपणन उद्देश्यों के लिए नहीं करते हैं या इसे तीसरे पक्ष के साथ साझा नहीं करते हैं।",
+            privacyConsentText: "हमारी वेबसाइट का उपयोग करके, आप हमारी गोपनीयता नीति के लिए अपनी सहमति देते हैं और इसकी शर्तों से सहमत होते हैं। यदि आपको किसी और जानकारी की आवश्यकता है या हमारी गोपनीयता नीति के बारे में कोई प्रश्न हैं, तो कृपया हमसे संपर्क करने में संकोच न करें।",
+            contactFormEmail: "आपका ईमेल",
+            contactFormMessage: "आपका संदेश",
+            contactFormSending: "भेज रहा है...",
+            contactFormSuccess: "धन्यवाद! आपका संदेश सफलतापूर्वक भेज दिया गया है।",
+            contactFormError: "उफ़! कुछ गलत हो गया। कृपया बाद में पुनः प्रयास करें।",
+            contactFormSubmit: "संदेश भेजें",
             footerDevotion: "भक्ति से बनाया गया 💛",
             footerRights: "© 2025 Av_eSAFE . सर्वाधिकार सुरक्षित।",
             temple1Name: "काशी विश्वनाथ",
@@ -762,6 +841,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        // Add this new part for placeholders
+        document.querySelectorAll('[data-lang-placeholder-key]').forEach(element => {
+            const key = element.getAttribute('data-lang-placeholder-key');
+            if (translations[lang] && translations[lang][key]) {
+                element.placeholder = translations[lang][key];
+            }
+        });
+
         // Special handling for Aarti mute button title on language change
         const aartiMuteBtn = document.getElementById('aarti-mute-btn');
         if (aartiMuteBtn) {
@@ -1190,60 +1277,59 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // --- GITA CHAPTERS PAGE LOGIC (IFRAME METHOD) ---
-    const initGitaChaptersPage = () => {
-        const pdfViewerContainer = document.getElementById('pdf-viewer-container');
-        const chapterLinks = document.querySelectorAll('.gita-pdf-link');
-        
-        // Exit if the necessary elements aren't on this page.
-        if (!pdfViewerContainer || !chapterLinks.length) {
-            return;
-        }
-    
-        const docTitleEl = document.getElementById('pdf-doc-title');
-        const closeBtn = document.getElementById('pdf-close-btn');
-        const pdfIframe = document.getElementById('pdf-iframe');
-        const loader = document.getElementById('pdf-loader');
-    
-        const openViewer = (url, title) => {
-            docTitleEl.textContent = title;
-            pdfIframe.src = ''; // Clear previous PDF to show loader properly
-            pdfViewerContainer.classList.add('visible');
-            loader.classList.add('visible');
-            
-            // Set the src after a short delay to ensure the loader is visible first
-            setTimeout(() => {
-                pdfIframe.src = url;
-            }, 100);
-    
-            pdfViewerContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        };
+    // --- CONTACT FORM AJAX SUBMISSION ---
+    const initContactForm = () => {
+        const form = document.getElementById('contact-form');
+        const resultDiv = document.getElementById('form-result');
 
-        const closeViewer = () => {
-            pdfViewerContainer.classList.remove('visible');
-            pdfIframe.src = ''; // Clear the iframe src to stop loading/rendering
-        };
-    
-        // Hide loader once the iframe has loaded its content
-        pdfIframe.addEventListener('load', () => {
-            loader.classList.remove('visible');
-        });
-    
-        chapterLinks.forEach(link => {
-            link.addEventListener('click', (event) => {
-                event.preventDefault();
-                const pdfUrl = link.href;
-                
-                // More robust way to get the title by using the translation data directly.
-                const strongEl = link.querySelector('strong');
-                const langKey = strongEl.getAttribute('data-lang-key');
-                const currentLang = localStorage.getItem('language') || 'en';
-                const chapterTitle = translations[currentLang][langKey] || strongEl.textContent; // Fallback to the element's text
-                openViewer(pdfUrl, chapterTitle); // Pass the correct title to the viewer
+        if (!form || !resultDiv) return;
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            
+            const formData = new FormData(form);
+            const object = {};
+            formData.forEach((value, key) => {
+                object[key] = value;
+            });
+            const json = JSON.stringify(object);
+
+            const currentLang = localStorage.getItem('language') || 'en';
+            const submitButton = form.querySelector('button[type="submit"]');
+            
+            // Show loading state
+            submitButton.disabled = true;
+            submitButton.textContent = translations[currentLang]['contactFormSending'];
+            resultDiv.style.display = 'none';
+            resultDiv.className = ''; // Reset classes
+
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: json
+            })
+            .then(async (response) => {
+                let jsonResponse = await response.json();
+                resultDiv.classList.add(response.status === 200 ? 'success' : 'error');
+                resultDiv.innerHTML = response.status === 200 ? translations[currentLang]['contactFormSuccess'] : (jsonResponse.message || translations[currentLang]['contactFormError']);
+                if (response.status === 200) form.reset();
+            })
+            .catch(error => {
+                console.error('Fetch Error:', error);
+                resultDiv.classList.add('error');
+                resultDiv.innerHTML = translations[currentLang]['contactFormError'];
+            })
+            .finally(() => {
+                resultDiv.style.display = 'block';
+                submitButton.disabled = false;
+                const buttonKey = submitButton.getAttribute('data-lang-key');
+                submitButton.textContent = translations[currentLang][buttonKey];
+                setTimeout(() => { resultDiv.style.display = 'none'; }, 6000);
             });
         });
-    
-        closeBtn.addEventListener('click', closeViewer);
     };
 
     // --- PRE-LOADER LOGIC ---
@@ -1294,7 +1380,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScriptureTabs();
     initScriptureDetailsPage();
     initDeityDetailsPage();
-    initGitaChaptersPage();
+    initContactForm();
 
     // This listener must be after setLanguage is defined
     langToggleButton.addEventListener('click', () => {
