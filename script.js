@@ -1332,6 +1332,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // --- BACK TO TOP BUTTON ---
+    const initBackToTop = () => {
+        const backToTopBtn = document.getElementById('back-to-top');
+        if (!backToTopBtn) return;
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) { // Show button after scrolling 300px
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    };
+
     // --- PRE-LOADER LOGIC ---
     const initPreloader = () => {
         const preloader = document.getElementById('preloader');
@@ -1381,6 +1403,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScriptureDetailsPage();
     initDeityDetailsPage();
     initContactForm();
+    initBackToTop();
 
     // This listener must be after setLanguage is defined
     langToggleButton.addEventListener('click', () => {
