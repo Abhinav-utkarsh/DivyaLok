@@ -144,7 +144,7 @@
                                 <li data-lang-key="upanishad6">Mandukya</li>
                             </ul>
                         </div>
-                        <a href="scripture-details.html?name=upanishads" class="read-more" data-lang-key="readMore">Read More →</a>
+                        <!-- <a href="scripture-details.html?name=upanishads" class="read-more" data-lang-key="readMore">Read More →</a> -->
                     </div>
                     <div id="ramayana" class="tab-content" data-aos="fade-in">
                         <h3 data-lang-key="ramayanaTitle">The Ramayana</h3>
@@ -161,7 +161,7 @@
                                 <li data-lang-key="kanda7">Uttara Kanda</li>
                             </ul>
                         </div>
-                        <a href="scripture-details.html?name=ramayana" class="read-more" data-lang-key="readMore">Read More →</a>
+                        <!-- <a href="scripture-details.html?name=ramayana" class="read-more" data-lang-key="readMore">Read More →</a> -->
                     </div>
                     <div id="mahabharata" class="tab-content" data-aos="fade-in">
                         <h3 data-lang-key="mahabharataTitle">The Mahabharata</h3>
@@ -177,7 +177,7 @@
                                 <li data-lang-key="parva6">...and more</li>
                             </ul>
                         </div>
-                        <a href="scripture-details.html?name=mahabharata" class="read-more" data-lang-key="readMore">Read More →</a>
+                        <!-- <a href="scripture-details.html?name=mahabharata" class="read-more" data-lang-key="readMore">Read More →</a> -->
                     </div>
                     <div id="gita" class="tab-content" data-aos="fade-in">
                         <h3 data-lang-key="gitaTitle">The Bhagavad Gita</h3>
@@ -344,6 +344,75 @@
             </div>
         </div>
     </footer>
+
+<!-- Terms & Conditions Bottom Bar -->
+<div id="termsBar" class="terms-bar hidden">
+  <div class="terms-content">
+    <span>
+      By using this website, you agree to our 
+      <a href="privacy.html" target="_blank">Privacy Policy</a> 
+      and 
+      <a href="privacy.html" target="_blank">Terms & Conditions</a>.
+    </span>
+    <label class="terms-check">
+      <input type="checkbox" id="agreeCheckbox"> I agree
+    </label>
+    <button id="acceptBtn" class="btn" disabled>Accept</button>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    if (!localStorage.getItem("termsAccepted")) {
+      document.getElementById("termsBar").classList.remove("hidden");
+    }
+
+    const checkbox = document.getElementById("agreeCheckbox");
+    const acceptBtn = document.getElementById("acceptBtn");
+
+    checkbox.addEventListener("change", function() {
+      acceptBtn.disabled = !this.checked;
+    });
+
+    acceptBtn.addEventListener("click", function() {
+      localStorage.setItem("termsAccepted", "true");
+      document.getElementById("termsBar").classList.add("hidden");
+    });
+  });
+</script>
+
+<style>
+  /* Minimal extra styling – blends with your site */
+  .terms-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: var(--bg-color, #f8f9fa); /* falls back if your site has no variable */
+    color: inherit;
+    padding: 12px;
+    text-align: center;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    z-index: 9999;
+    transition: transform 0.3s ease;
+  }
+  .terms-bar.hidden {
+    transform: translateY(100%);
+  }
+  .terms-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  .terms-check {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+</style>
+
 
     <!-- Back to Top Button -->
     <a href="#" id="back-to-top" title="Back to Top">↑</a>
